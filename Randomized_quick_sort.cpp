@@ -1,0 +1,54 @@
+#include <iostream>
+#include <cstdlib>  
+#include <ctime>   
+using namespace std;
+
+int partition(int a[], int low, int high) {
+
+    int pivotIndex = low + rand() % (high - low + 1);
+    cout << "Chosen pivot: " << a[pivotIndex] << " (at index " << pivotIndex << ")" << endl;
+    swap(a[pivotIndex], a[high]);
+
+    int pivot = a[high];
+    int i = low - 1;
+    for (int j = low; j < high; j++) {
+        if (a[j] <= pivot) {
+            i++;
+            swap(a[i], a[j]);
+        }
+    }
+    swap(a[i + 1], a[high]);
+    return i + 1;
+}
+
+void quickSort(int a[], int low, int high) {
+    if (low < high) {
+        int pi = partition(a, low, high);
+
+        quickSort(a, low, pi - 1);
+        quickSort(a, pi + 1, high);
+    }
+}
+
+int main() {
+    int a[] = {10, 7, 8, 9, 1, 5};
+    int n = sizeof(a) / sizeof(a[0]);
+
+    srand(time(0)); 
+
+    cout << "Original array: ";
+    for (int i = 0; i < n; i++) {
+        cout << a[i] << " ";
+    }
+    cout << endl << endl;
+
+    quickSort(a, 0, n - 1);
+
+    cout << "\nSorted array: ";
+    for (int i = 0; i < n; i++) {
+        cout << a[i] << " ";
+    }
+    cout << endl;
+
+    return 0;
+}
