@@ -7,11 +7,10 @@ struct Edge {
 };
 
 void BellmanFord(int V, int E, vector<Edge> &edges, int src) {
-    const int INF = 1000000000; // use a big number instead of INT_MAX
+    const int INF = 1000000000;
     vector<int> dist(V, INF);
     dist[src] = 0;
 
-    // Step 2: Relax all edges V-1 times
     for (int i = 1; i <= V - 1; i++) {
         for (int j = 0; j < E; j++) {
             int u = edges[j].u;
@@ -24,7 +23,7 @@ void BellmanFord(int V, int E, vector<Edge> &edges, int src) {
         }
     }
 
-    // Step 3: Check for negative weight cycle
+    // Check for negative weight cycles
     for (int j = 0; j < E; j++) {
         int u = edges[j].u;
         int v = edges[j].v;
@@ -36,6 +35,35 @@ void BellmanFord(int V, int E, vector<Edge> &edges, int src) {
         }
     }
 
+    cout << "Vertex   Distance from Source\n";
+    for (int i = 0; i < V; i++) {
+        if (dist[i] == INF)
+            cout << i << "\tINF\n";
+        else
+            cout << i << "\t\t\t\t" << dist[i] << "\n";
+    }
+}
+
+int main() {
+    int V = 5;
+    int E = 8;
+    vector<Edge> edges = {
+        {0, 1, -1},
+        {0, 2, 4},
+        {1, 2, 3},
+        {1, 3, 2},
+        {1, 4, 2},
+        {3, 2, 5},
+        {3, 1, 1},
+        {4, 3, -3}
+    };
+
+    int src = 0;
+
+    BellmanFord(V, E, edges, src);
+
+    return 0;
+}
     // Print result
     cout << "Vertex   Distance from Source\n";
     for (int i = 0; i < V; i++) {
