@@ -3,7 +3,7 @@
 #include <algorithm>
 using namespace std;
 
-vector<int> parent, sz;
+vector<int> parent, sz;  // renamed size to sz
 
 void make_set(int v) {
     parent[v] = v;
@@ -11,69 +11,64 @@ void make_set(int v) {
 }
 
 int find_set(int v) {
-    if (v == parent[v])
-        return v;
-    return parent[v] = find_set(parent[v]); // Path compression
+    if (v == parent[v]) return v;
+    return parent[v] = find_set(parent[v]); // path compression
 }
 
 void union_sets(int a, int b) {
     a = find_set(a);
     b = find_set(b);
     if (a != b) {
-        if (sz[a] < sz[b])
-            swap(a, b);
+        if (sz[a] < sz[b]) swap(a, b);
         parent[b] = a;
         sz[a] += sz[b];
+        
     }
 }
 
 int main() {
-    int n, m;
-    cout << "Enter number of nodes and edges: ";
-    cin >> n >> m;
+    int n = 4, m = 5;
+
+    // Sample edges: {weight, {u, v}}
+    vector< pair<int, pair<int, int>> > edges = {
+        {1, {1, 2}},
+        {4, {1, 3}},
+        {2, {2, 3}},
+        {5, {2, 4}},
+        {3, {3, 4}}
+    };
 
     parent.resize(n + 1);
     sz.resize(n + 1);
+
     for (int i = 1; i <= n; ++i)
         make_set(i);
 
-    vector< pair<int, pair<int, int>> > edges;
-
-    cout << "Enter each edge as: u v w\n";
-    for (int i = 0; i < m; ++i) {
-        int u, v, w;
-        cin >> u >> v >> w;
-
-        // Optional: Validate node range
-        if (u < 1 || u > n || v < 1 || v > n) {
-            cout << "Invalid node number in edge " << u << " " << v << ". Skipping.\n";
-            continue;
-        }
-
-        edges.push_back({w, {u, v}});
-    }
-
+    // Step 1: Sort edges by weight
     sort(edges.begin(), edges.end());
 
-    int cost = 0;
-    vector<pair<int, int>> mst;
+    vector<pair<int,int>> mst;
+    int total_cost = 0;
 
+    // Step 2 & 3: Build MST using Kruskal's Algorithm
     for (auto &edge : edges) {
         int w = edge.first;
         int u = edge.second.first;
         int v = edge.second.second;
 
         if (find_set(u) != find_set(v)) {
-            mst.push_back({u, v});
-            cost += w;
             union_sets(u, v);
+            mst.push_back({u, v});
+            total_cost += w;
         }
     }
 
-    cout << "\nEdges in MST:\n";
+    // Output MST edges and total cost
+    cout << "Edges in MST:\n";
     for (auto &e : mst)
         cout << e.first << " - " << e.second << "\n";
 
-    cout << "Total cost: " << cost << "\n";
+    cout << "Total cost: " << total_cost << "\n";
+
     return 0;
 }
