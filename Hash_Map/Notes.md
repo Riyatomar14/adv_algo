@@ -166,4 +166,5 @@ int main() {
     return 0;
 }
 ```
-<img width="525" height="404" alt="image" src="https://github.com/user-attachments/assets/655fc27d-c679-463f-9c68-18f6dea126b2" />
+<img width="546" height="511" alt="image" src="https://github.com/user-attachments/assets/c51e598e-19b9-4e65-9016-89e33aeec125" />
+
