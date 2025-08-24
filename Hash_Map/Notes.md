@@ -168,3 +168,117 @@ int main() {
 ```
 <img width="546" height="511" alt="image" src="https://github.com/user-attachments/assets/c51e598e-19b9-4e65-9016-89e33aeec125" />
 
+# 📘 Hashing – Collision Handling and Analysis
+
+---
+
+## 1. Collision Handling  
+
+Collisions occur when two keys are mapped to the same index in a hash table.  
+To resolve this, we use **collision handling techniques**:
+
+### 🔹 1. Open Addressing (Chaining)  
+- Each index in the table stores a **list (linked list / dynamic array)**.  
+- If multiple elements map to the same index, they are placed inside that list.  
+- **Insertion, Search, Deletion** → Average **O(1)** (if Load Factor is small).  
+- Example:
+  
+<img width="250" height="32" alt="image" src="https://github.com/user-attachments/assets/70873d22-1e72-4b95-9851-ba4ea3454c84" />
+
+
+✅ Easy insertion/deletion.  
+⚠️ Needs extra memory for linked lists.  
+---
+
+### 🔹 2. Closed Addressing (Probing Methods)  
+Here, all elements are stored **directly inside the table**.  
+If a slot is occupied, probing is used to find the next free slot.  
+
+1. **Linear Probing**  
+ - Place element in the next empty cell (step = 1).  
+ - Problem: Clustering (long chains of occupied cells).  
+ - Formula:  
+   <img width="370" height="81" alt="image" src="https://github.com/user-attachments/assets/608b78a8-b772-4824-91dc-29f3970356eb" />
+
+
+2. **Quadratic Probing**  
+ - Use quadratic jumps to reduce clustering.  
+ - Formula:  
+  <img width="293" height="55" alt="image" src="https://github.com/user-attachments/assets/51114793-3f5c-4e7b-92c3-c50243dd755b" />
+
+
+3. **Double Hashing**  
+ - Uses two hash functions to calculate probe sequence.  
+ - Formula:  
+<img width="397" height="234" alt="image" src="https://github.com/user-attachments/assets/b93a8594-bce3-428b-b47e-86dd25fbc6b4" />
+<img width="705" height="392" alt="image" src="https://github.com/user-attachments/assets/9f89049f-41dc-42f1-9c72-e979186dd2cc" />
+
+ - Reduces clustering efficiently.  
+
+---
+
+## 2. Insertion, Deletion & Search  
+
+- **Insertion:**  
+- Average Time Complexity: **O(1)**  
+- May require **rehashing** if Load Factor exceeds threshold.  
+
+- **Deletion:**  
+- In Chaining → remove from linked list.  
+- In Probing → mark slot as "deleted" (special marker).  
+
+- **Search:**  
+- Average Case: **O(1)**  
+- Worst Case: **O(n)** (when collisions are poorly handled).  
+
+---
+
+## 3. Load Factor (LF)  
+
+<img width="472" height="86" alt="image" src="https://github.com/user-attachments/assets/575fc219-de54-4575-b4cd-ed8693ce963a" />
+
+
+- Ideal: **LF < 0.7** for good performance.  
+- If LF grows too high → collisions increase → slower operations.  
+
+---
+
+## 4. Rehashing  
+
+- Triggered when **LF > threshold (e.g., 0.7)**.  
+- Steps:  
+1. Create a new hash table (usually double the size).  
+2. Recompute positions of all existing elements.  
+3. Insert them into the new table.  
+
+Keeps performance near **O(1)**.  
+
+---
+
+## 5. Complexity Analysis  
+
+- **Hash Computation (H.C):**  
+- Depends on key length `k`.  
+- Time Complexity = **O(k)**.  
+- If number of elements `n >> k` → treat hashing as **O(1)**.  
+
+- **Insertion / Search / Deletion:**  
+- Average Case: **O(1)**  
+- Worst Case: **O(n)** (heavy clustering or poor hash function).  
+
+---
+
+## ✅ Summary  
+
+- **Collision Handling:**  
+- **Open Addressing (Chaining)** → external lists.  
+- **Closed Addressing (Linear, Quadratic, Double Hashing)** → probing inside table.  
+- **Load Factor (LF < 0.7)** keeps collisions low.  
+- **Rehashing** ensures efficient performance.  
+- With a good hash function: **Insertion, Deletion, Search ≈ O(1)** average.  
+
+---
+
+
+
+
