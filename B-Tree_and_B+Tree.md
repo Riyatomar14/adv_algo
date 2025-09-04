@@ -169,3 +169,43 @@ n × (Key + DP) + BP <= 512
 | **Redundant keys**   | No redundancy                        | Keys may repeat (for indexing)            |
 | **Leaf linkage**     | Not linked                           | Linked (efficient range queries)          |
 | **Use cases**        | Older DB, file systems               | Modern DB & file systems (MySQL, NTFS)    |
+
+## ⚙️ Operations on B-Trees
+
+### 🔹 Insertion
+1. Always insert new keys in a **leaf node**.  
+2. If the leaf has space → insert in sorted order.  
+3. If the leaf is full → **split** the node into two and move the **middle key** up to the parent.  
+4. If the parent is also full → recursively split upwards until root.  
+5. If root splits → a new root is created, increasing the tree height.
+
+---
+
+### 🔹 Deletion
+1. Find the node containing the key.  
+2. If the key is in a **leaf node**:  
+   - Simply remove it.  
+   - If underflow (less than minimum keys) occurs → **borrow** from sibling or **merge** with sibling.  
+3. If the key is in an **internal node**:  
+   - Replace it with **predecessor** or **successor** from child subtree.  
+   - Then delete that key from the leaf as above.  
+4. Balance is always maintained by **borrowing or merging**.
+
+---
+
+## 🌲 2–4 Tree (Relation to B-Tree)
+
+A **2–4 Tree** is a specific type of B-Tree of **order 4**.  
+
+### 🔹 Properties
+- Each internal node can have **2, 3, or 4 children**.  
+- Corresponding keys per node = **1, 2, or 3 keys**.  
+- All leaves are at the **same level**.  
+- Perfectly balanced by definition.  
+
+### 🔹 Connection with B-Trees
+- A 2–4 tree is the same as a **B-Tree of order 4**.  
+- Insertion and deletion work with **splitting and merging** like in general B-Trees.  
+- 2–4 trees are used to implement **Red-Black Trees** in many programming libraries.
+
+
