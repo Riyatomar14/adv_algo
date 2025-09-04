@@ -59,16 +59,16 @@ A **B-Tree** is a balanced multi-way search tree in which:
 
 Formula:  
 \[
-n \times BP + (n-1)(Key + DP) \leq 512
+n × BP + (n-1)×(Key + DP) <= 512
 \]
 
 Substitute:  
 \[
-n \times 5 + (n-1)(10+8) \leq 512
+n × 5 + (n-1)(10+8) <= 512
 \]
 
 \[
-23n \leq 530 \implies n \approx 23
+23n <= 530
 \]
 
 ✅ **Order of B-Tree = 23**
@@ -132,11 +132,15 @@ A **B+ Tree** is an extension of B-Tree where:
 
 **For Internal Node**:  
 \[
-n \times BP + (n-1) \times Key \leq 512
+n × BP + (n-1) × Key <= 512
 \]
 
 \[
-15n \leq 522 \implies n \approx 34
+n×5+(n-1) ×10<=512
+\]
+
+\[
+15n<=502
 \]
 
 ✅ **Order of Internal Node = 34**
@@ -145,11 +149,11 @@ n \times BP + (n-1) \times Key \leq 512
 
 **For Leaf Node**:  
 \[
-n \times (Key + DP) + BP \leq 512
+n × (Key + DP) + BP <= 512
 \]
 
 \[
-18n + 5 \leq 512 \implies n \leq 28
+18n +5 <=512
 \]
 
 ✅ **Leaf Node capacity = 28 keys**
